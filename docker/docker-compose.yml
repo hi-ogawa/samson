@@ -13,9 +13,8 @@ services:
       - BUNDLE_PATH=/bundle
       - DATABASE_URL=mysql://root@mysql:3306
       - MEMCACHE_URL=memcache:11211
-      # + 1 thread for SSE
-      - RAILS_MIN_THREADS=2
-      - RAILS_MAX_THREADS=2
+      - RAILS_MIN_THREADS=5
+      - RAILS_MAX_THREADS=5
     volumes:
       - ../:/app
       - ~/.ssh:/root/.ssh
