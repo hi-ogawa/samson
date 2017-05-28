@@ -1,0 +1,40 @@
+version: "2"
+
+services:
+  ruby:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    command: sleep inf
+    ports:
+      - 3000:3000
+    working_dir: /app
+    environment:
+      - BUNDLE_PATH=/bundle
+      - DATABASE_URL=mysql://root@mysql:3306
+      - MEMCACHE_URL=memcache:11211
+      # + 1 thread for SSE
+      - RAILS_MIN_THREADS=2
+      - RAILS_MAX_THREADS=2
+    volumes:
+      - ../:/app
+      - ~/.ssh:/root/.ssh
+      - bundle_v:/bundle
+
+  mysql:
+    image: mariadb:10.3.0
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - mysql_v:/var/lib/mysql
+
+  memcache:
+    image: memcached:1.4.36-alpine
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - mysql_v:/var/lib/mysql
+
+volumes:
+  bundle_v:
+  mysql_v:

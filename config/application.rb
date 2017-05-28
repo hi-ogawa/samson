@@ -52,7 +52,7 @@ module Samson
     if Rails.env.test?
       config.cache_store = :memory_store
     else
-      servers = []
+      servers = [ENV["MEMCACHE_URL"]]
       options = {
         value_max_bytes: 3000000,
         compress: true,

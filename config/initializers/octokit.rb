@@ -1,3 +1,5 @@
+if Rails.application.config.samson.auth.github
+
 # frozen_string_literal: true
 require 'octokit'
 require 'faraday-http-cache'
@@ -46,3 +48,5 @@ Sawyer::Response.prepend(Module.new do
     Rails.logger.info("GITHUB #{@env.method.upcase} (#{timing}s) #{@env.url}")
   end
 end)
+
+end
